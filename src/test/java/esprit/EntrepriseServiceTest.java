@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import esprit.entities.Departement;
-import esprit.entities.Entreprise;
+import esprit.entities.Entreprise;	
 import esprit.services.IEntrepriseService;
 
 @SpringBootTest
