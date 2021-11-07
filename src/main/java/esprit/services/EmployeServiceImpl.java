@@ -24,7 +24,7 @@ import esprit.repository.TimesheetRepository;
 @Service
 public class EmployeServiceImpl implements IEmployeService {
 
-	private static final Logger l = Logger.getLogger(IEmployeService.class);
+	private static final Logger l = Logger.getLogger(EmployeServiceImpl.class);
 
 	@Autowired
 	EmployeRepository employeRepository;
@@ -49,7 +49,7 @@ public class EmployeServiceImpl implements IEmployeService {
 
 	}
 
-	public void mettreAjourEmailByEmployeId(String email, int employeId) {
+	public int mettreAjourEmailByEmployeId(String email, int employeId) {
 
 		try {
 			Optional<Employe> employeManagedEntity = employeRepository.findById(employeId);
@@ -59,17 +59,21 @@ public class EmployeServiceImpl implements IEmployeService {
 				employe.setEmail(email);
 				employeRepository.save(employe);
 				l.info("Employe Updated: " + employe);
+				return employeId ; 
 
 			} else {
 
 				l.warn("Employe don't exist");
+				return 0;
 
 			}
 
 		} catch (Exception e) {
 
 			l.error(e.toString());
+			return 0 ;
 		}
+		
 	}
 
 	@Transactional
@@ -157,7 +161,7 @@ public class EmployeServiceImpl implements IEmployeService {
 		return null;
 	}
 
-	public void deleteEmployeById(int employeId) {
+	public int deleteEmployeById(int employeId) {
 		Employe employe = employeRepository.findById(employeId).orElse(null);
 
 		if (employe != null) {
@@ -167,8 +171,10 @@ public class EmployeServiceImpl implements IEmployeService {
 
 			employeRepository.delete(employe);
 			l.info("employe deleted");
+			return 1;
 		} else {
 			l.warn("Employe dosen't exist");
+			return 0;
 		}
 	}
 

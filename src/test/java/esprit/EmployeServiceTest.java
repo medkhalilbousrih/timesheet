@@ -1,6 +1,12 @@
 package esprit;
 
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,7 +19,8 @@ import esprit.services.IEmployeService;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class EmployeServiceTest {
+@TestMethodOrder(OrderAnnotation.class)
+class EmployeServiceTest {
 
 	@Autowired
 	EmployeServiceImpl em;
@@ -22,30 +29,39 @@ public class EmployeServiceTest {
 	IEmployeService employeService;
 
 	@Test
-	public void testAjouterEmploye() {
+	@Order(1)
+	void testAjouterEmploye() {
 		Employe employe = new Employe("aze", "kh", "aalop", true, Role.ADMINISTRATEUR);
-		employeService.ajouterEmploye(employe);
+		Employe employe1 = new Employe("qqqq", "rrrr", "kwala", true, Role.CHEF_DEPARTEMENT);
+		assertNotEquals(0, employeService.ajouterEmploye(employe));
+		assertNotEquals(0, employeService.ajouterEmploye(employe1));
+		
 
 	}
 
 	@Test
-	public void testMettreAjourEmailByEmployeId() {
-		employeService.mettreAjourEmailByEmployeId("test5@gmail.com", 3);
+	@Order(2)
+	void testMettreAjourEmailByEmployeId() {
+		assertNotEquals(0, employeService.mettreAjourEmailByEmployeId("test5@gmail.com", 2));
 	}
 
 	@Test
-	public void testGetAllEmployes() {
-		employeService.getAllEmployes();
+	@Order(3)
+	void testGetAllEmployes() {
+		assertNotEquals(0, employeService.getAllEmployes().size());
 
 	}
 	
     @Test
-    public void testDeleteEmployeById() {
-    	employeService.deleteEmployeById(2);
+    @Order(5)
+    void testDeleteEmployeById() {
+    	assertNotEquals(0,employeService.deleteEmployeById(1));
+    	
     }
     
     @Test
-    public void testgetEmployePrenomById() {
-    	employeService.getEmployePrenomById(1);
+    @Order(4)
+    void testgetEmployePrenomById() {
+    	assertNotNull(employeService.getEmployePrenomById(2));
     }
 }
