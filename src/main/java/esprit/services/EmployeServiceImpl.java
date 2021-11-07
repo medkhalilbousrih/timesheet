@@ -35,9 +35,18 @@ public class EmployeServiceImpl implements IEmployeService {
 	@Autowired
 	TimesheetRepository timesheetRepository;
 
+	@Override
 	public int ajouterEmploye(Employe employe) {
-		employeRepository.save(employe);
-		return employe.getId();
+		try {
+			employeRepository.save(employe);
+			l.info(employe);
+			return employe.getId();
+
+		} catch (Exception e) {
+			l.error("Add failure");
+			return 0;
+		}
+
 	}
 
 	public void mettreAjourEmailByEmployeId(String email, int employeId) {
@@ -151,29 +160,26 @@ public class EmployeServiceImpl implements IEmployeService {
 	public void deleteEmployeById(int employeId) {
 		Employe employe = employeRepository.findById(employeId).orElse(null);
 
-	if(employe !=null) {	
-		for (Departement dep : employe.getDepartements()) {
-			dep.getEmployes().remove(employe);
-		}
+		if (employe != null) {
+			for (Departement dep : employe.getDepartements()) {
+				dep.getEmployes().remove(employe);
+			}
 
-		employeRepository.delete(employe);
-		l.info("employe deleted");
-	}
-	else {
-		l.warn("Employe dosen't exist");
-	}
+			employeRepository.delete(employe);
+			l.info("employe deleted");
+		} else {
+			l.warn("Employe dosen't exist");
+		}
 	}
 
 	public void deleteContratById(int contratId) {
 		Contrat contratManagedEntity = contratRepoistory.findById(contratId).orElse(null);
-		if (contratManagedEntity != null ) {
+		if (contratManagedEntity != null) {
 			contratRepoistory.delete(contratManagedEntity);
 			l.info("Contract Deleted");
-		}
-		else {
+		} else {
 			l.warn("Contract not found");
 		}
-		
 
 	}
 
