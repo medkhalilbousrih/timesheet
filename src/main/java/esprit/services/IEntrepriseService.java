@@ -13,7 +13,7 @@ public interface IEntrepriseService {
 	public int ajouterDepartement(Departement dep);
 	Departement affecterDepartementAEntreprise(int depId, int entrepriseId);
 	List<String> getAllDepartementsNamesByEntreprise(int entrepriseId);
-	public void deleteEntrepriseById(int entrepriseId);
-	public void deleteDepartementById(int depId);
+	public int deleteEntrepriseById(int entrepriseId);
+	public int deleteDepartementById(int depId);
 	public Entreprise getEntrepriseById(int entrepriseId);
 }
