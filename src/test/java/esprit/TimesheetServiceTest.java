@@ -1,8 +1,13 @@
 package esprit;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.util.Date;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,48 +18,39 @@ import esprit.services.ITimesheetService;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class TimesheetServiceTest {
+class TimesheetServiceTest {
 
 	@Autowired
 	ITimesheetService ts;
 
 	@Test
-	public void testAjouterMission() {
+	void testAjouterMission() {
 
 		Mission mission = new Mission("formation", "Formation Angular");
-		ts.ajouterMission(mission);
-
+		assertNotEquals(0, ts.ajouterMission(mission));
 	}
 
 	@Test
-	public void testAffectrMission() {
+	void testAffectrMission() {
 
-		ts.affecterMissionADepartement(1, 2);
-
+		
+		assertNotEquals(0,ts.affecterMissionADepartement(1, 2));
 	}
 
 	@Test
-	public void testajouterTimesheet() {
+	void testajouterTimesheet() {
 
 		Date dateTime = new Date("08/07/2019");
-		ts.ajouterTimesheet(1, 1, dateTime, dateTime);
-
+		
+		assertNotEquals(0,ts.ajouterTimesheet(1, 1, dateTime, dateTime));
 	}
 
-	/*
-	 * @Test }
-	 */
+	
+	
 	@Test
-	public void testfindAllMissionByEmployeJPQL() {
+	void testgetAllEmployeByMission() {
 
-		ts.findAllMissionByEmployeJPQL(50);
-
-	}
-
-	@Test
-	public void testgetAllEmployeByMission() {
-
-		ts.getAllEmployeByMission(10);
-
+		
+		assertEquals(0,ts.getAllEmployeByMission(10).size());
 	}
 }
