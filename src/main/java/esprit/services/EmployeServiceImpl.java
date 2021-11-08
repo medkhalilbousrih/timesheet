@@ -6,10 +6,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.log4j.Logger;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import esprit.dto.ContratDto;
+import esprit.dto.EmployeDto;
 import esprit.entities.Contrat;
 import esprit.entities.Departement;
 import esprit.entities.Employe;
@@ -59,7 +62,7 @@ public class EmployeServiceImpl implements IEmployeService {
 				employe.setEmail(email);
 				employeRepository.save(employe);
 				l.info("Employe Updated: " + employe);
-				return employeId ; 
+				return employeId;
 
 			} else {
 
@@ -71,13 +74,13 @@ public class EmployeServiceImpl implements IEmployeService {
 		} catch (Exception e) {
 
 			l.error(e.toString());
-			return 0 ;
+			return 0;
 		}
-		
+
 	}
 
 	@Transactional
-	public void affecterEmployeADepartement(int employeId, int depId) {
+	public int affecterEmployeADepartement(int employeId, int depId) {
 		try {
 
 			Optional<Departement> depManagedEntity = deptRepoistory.findById(depId);
@@ -102,15 +105,18 @@ public class EmployeServiceImpl implements IEmployeService {
 
 				l.info("departement affected " + department);
 				l.info("employee affected " + employe);
+				return employeId ;
 
 			}
 
 			else {
 				l.warn("Cet employe ou ce departement n'existe pas");
+				return 0;
 			}
 
 		} catch (Exception e) {
 			l.error(e.toString());
+			return 0;
 		}
 	}
 
@@ -226,6 +232,33 @@ public class EmployeServiceImpl implements IEmployeService {
 
 	public List<Employe> getAllEmployes() {
 		return (List<Employe>) employeRepository.findAll();
+	}
+
+	@Override
+	public Employe mapToEntity(EmployeDto employeDto) {
+		ModelMapper modelMapper = new ModelMapper();
+		return modelMapper.map(employeDto, Employe.class);
+
+	}
+
+	@Override
+	public EmployeDto mapToDto(Employe employe) {
+		ModelMapper modelMapper = new ModelMapper();
+		return modelMapper.map(employe, EmployeDto.class);
+	}
+
+	@Override
+	public Contrat mapToEntityC(ContratDto contratDto) {
+		ModelMapper modelMapper = new ModelMapper();
+		return modelMapper.map(contratDto, Contrat.class);
+
+	}
+
+	@Override
+	public ContratDto mapToDtoC(Contrat contrat) {
+		ModelMapper modelMapper = new ModelMapper();
+		return modelMapper.map(contrat, ContratDto.class);
+
 	}
 
 }

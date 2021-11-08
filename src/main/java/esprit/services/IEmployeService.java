@@ -3,6 +3,8 @@ package esprit.services;
 import java.util.Date;
 import java.util.List;
 
+import esprit.dto.ContratDto;
+import esprit.dto.EmployeDto;
 import esprit.entities.Contrat;
 import esprit.entities.Employe;
 import esprit.entities.Entreprise;
@@ -16,7 +18,7 @@ public interface IEmployeService {
 	
 	public int ajouterEmploye(Employe employe);
 	public int mettreAjourEmailByEmployeId(String email, int employeId);
-	public void affecterEmployeADepartement(int employeId, int depId);
+	public int affecterEmployeADepartement(int employeId, int depId);
 	public void desaffecterEmployeDuDepartement(int employeId, int depId);
 	public int ajouterContrat(Contrat contrat);
 	public void affecterContratAEmploye(int contratId, int employeId);
@@ -34,6 +36,12 @@ public interface IEmployeService {
 	public List<Timesheet> getTimesheetsByMissionAndDate(Employe employe, Mission mission, 
 	Date dateDebut, Date dateFin);
 	
+	public Employe mapToEntity(EmployeDto employeDto);
+	public EmployeDto mapToDto(Employe employe);
+
+	public Contrat mapToEntityC(ContratDto contratDto);
+	public ContratDto mapToDtoC(Contrat contrat);
+
 	
 	
 
