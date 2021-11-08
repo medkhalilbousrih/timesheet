@@ -76,7 +76,7 @@ class EmployeServiceTest {
 
 	
 
-	@Test
+	/*@Test
 	@Order(6)
 	void testAffecterEmployeADepartement() {
 		Departement department = new Departement("test");
@@ -84,7 +84,7 @@ class EmployeServiceTest {
 		Employe employe = new Employe("hello", "world", "aalop", true, Role.ADMINISTRATEUR);
 		iEmployeService.ajouterEmploye(employe);
 		assertNotEquals(0,iEmployeService.affecterEmployeADepartement(3, 2));
-	}
+	}*/
 	
 	/*
 	@Test
