@@ -13,7 +13,7 @@ public class Health {
 	
 	@GetMapping("/health")
 	public ResponseEntity<String> getHealth(){
-		return new ResponseEntity<>("God Hello", HttpStatus.OK);
+		return new ResponseEntity<>("God Ho", HttpStatus.OK);
 	}
 	
 }
